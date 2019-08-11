@@ -8,7 +8,9 @@
 
 namespace app\controllers;
 
+use Yii;
 use app\models\Activity;
+use app\models\ActivityForm;
 use yii\web\Controller;
 
 class ActivityController extends Controller
@@ -25,6 +27,7 @@ class ActivityController extends Controller
         $model->body = 'Тело пятого активности';
         $model->start_date = time();
         $model->end_date = time()+24*60*60;
+        $model->author_id = 1;
         $model->cycle = true;
         $model->main = true;
 
@@ -39,6 +42,23 @@ class ActivityController extends Controller
         return $this->render('view', ['model'=>$model]);
 
 
+    }
+
+    public function actionAdd(){
+
+        $model = new ActivityForm();
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()){
+                Yii::$app->session->setFlash('activityFormSubmitted');
+
+                return $this->refresh();
+            }
+
+        }
+        return $this->render('addactivity', [
+            'model' => $model,
+        ]);
     }
 }
 

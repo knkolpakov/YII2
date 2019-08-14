@@ -60,6 +60,20 @@ class ActivityController extends Controller
             'model' => $model,
         ]);
     }
+
+    public function actionDb(){
+        \Yii::$app->db->createCommand()->insert('activity',[
+            'author_id'=> 1,
+            'title'=>'тест',
+            'body'=>'тест тест',
+            'start_date'=> time() + 60 * 60 * 24,
+            'end_date'=> time() + 60 * 60 * 24 *2,
+            'cycle'=> false,
+            'main'=> false,
+            'created_at'=> time(),
+            'updated_at'=> time()
+            ])->execute();
+    }
 }
 
 //http://yii2basic.geekbrains:81/user/profile

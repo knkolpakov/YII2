@@ -1,39 +1,45 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: evg
- * Date: 03/08/2019
- * Time: 13:46
- */
 
-/** @var \app\models\Activity $model */
+use yii\helpers\Html;
+use yii\widgets\DetailView;
+
+/* @var $this yii\web\View */
+/* @var $model app\models\Activity */
+
+$this->title = $model->title;
+$this->params['breadcrumbs'][] = ['label' => 'Activities', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
+\yii\web\YiiAsset::register($this);
 ?>
-    <h1>Дата</h1>
-        <h2><?php echo $model['start_date']?></h2>
-    <div><br>Название события: </div>
-        <div><?php echo $model['title']?></div>
-    <br>
-    <div>Описание события: </div>
-        <div><?php echo $model['body']?></div>
-    <br>
-    <div>Начало: </div>
-        <div><?php echo $model['start_date']?></div>
-    <br>
-    <div>Окончание: </div>
-        <div><?php echo $model['end_date']?></div>
-    <br>
-    <div>Автор: </div>
-        <div><?php echo $model['author_id']?></div>
-    <br>
-    <div>Повторяется: </div>
-        <div><?php echo $model['cycle']?></div>
-    <br>
-    <div><a href="#">Редактировать</a></div>
-    <br><br>
-    <div><a href="http://localhost:81/site">Вернуться к календарю</a></div>
+<div class="activity-view">
 
-   
+    <h1><?= Html::encode($this->title) ?></h1>
 
+    <p>
+        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => 'Are you sure you want to delete this item?',
+                'method' => 'post',
+            ],
+        ]) ?>
+    </p>
 
+    <?= DetailView::widget([
+        'model' => $model,
+        'attributes' => [
+            'id',
+            'title',
+            'body:ntext',
+            'start_date',
+            'end_date',
+            'author_id',
+            'cycle',
+            'main',
+            'created_at',
+            'updated_at',
+        ],
+    ]) ?>
 
-
+</div>

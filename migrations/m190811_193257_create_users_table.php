@@ -12,14 +12,16 @@ class m190811_193257_create_users_table extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('{{%users}}', [
+        $this->createTable('{{%user}}', [
             'id' => $this->primaryKey(),
-            'name' => $this->string()->notNull(),
-            'login' => $this->string()->notNull(),
-            'email' => $this->string()->notNull(),
-            'password' => $this->string()->notNull(),
-            'date' => $this->integer()->notNull(),
-            'is_admin' => $this->boolean()->notNull(),
+            'username'=>$this->string()->notNull()->unique(),
+            'auth_key'=>$this->string(32)->notNull(),
+            'password_hash'=>$this->string()->notNull(),
+            'password_reset_token'=>$this->string(),
+            'email'=>$this->string()->notNull()->unique(),
+            'created_at'=>$this->integer()->notNull(),
+            'updated_at'=>$this->integer()->notNull(),
+            'status'=>$this->integer()->notNull(),
         ]);
     }
 

@@ -1,11 +1,9 @@
 <?php
 
-namespace app\models;
+namespace app\modules\admin\models;
 
 use Yii;
-use yii\base\NotSupportedException;
-use yii\db\ActiveRecord;
-use yii\web\IdentityInterface;
+use app\models\User;
 
 /**
  * This is the model class for table "activity".
@@ -41,14 +39,13 @@ class Activity extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'start_date', 'end_date', 'author_id'], 'required'],
+            [['title', 'start_date', 'end_date', 'author_id', 'created_at', 'updated_at'], 'required'],
             [['body'], 'string'],
             [['start_date', 'end_date', 'author_id', 'cycle', 'main', 'created_at', 'updated_at'], 'integer'],
             [['title'], 'string', 'max' => 255],
             [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['author_id' => 'id']],
         ];
     }
-
     public function behaviors()
     {
         return [

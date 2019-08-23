@@ -41,10 +41,12 @@ AppAsset::register($this);
      ['label' => 'Home', 'url' => ['/site/index']],
      ['label' => 'About', 'url' => ['/site/about']],
      ['label' => 'Contact', 'url' => ['/site/contact']],
+     ['label' => 'Admin', 'url' => ['admin/default']],
+     ['label' => 'My Activity', 'url' => ['activity/index']],
  ];
   
  if (Yii::$app->user->isGuest) {
-     $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
+     $menuItems[] = ['label' => 'Signup', 'url' => ['/site/sign-up']];
      $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
  } else {
      $menuItems[] = '<li>'

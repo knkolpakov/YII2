@@ -2,19 +2,17 @@
 
 namespace app\controllers;
 
-use app\models\SignupForm;
 use Yii;
-use app\models\User;
-use app\models\UserSearch;
-use yii\filters\AccessControl;
+use app\models\Calendar;
+use app\models\CalendarSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\Activity;
+
 /**
- * UserController implements the CRUD actions for User model.
+ * CalendarController implements the CRUD actions for Calendar model.
  */
-class UserController extends Controller
+class CalendarController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -23,34 +21,23 @@ class UserController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::class,
+                'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
-                ],
-            ],
-            'access' => [
-                'class' => AccessControl::class,
-                'only' => ['index', 'create', 'update', 'view', 'delete']
-                ,
-                'rules' => [
-                    [
-                        'actions' => ['index', 'create', 'update', 'view', 'delete'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
                 ],
             ],
         ];
     }
 
     /**
-     * Lists all User models.
+     * Lists all Calendar models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new UserSearch();
+        $searchModel = new CalendarSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -58,34 +45,29 @@ class UserController extends Controller
     }
 
     /**
-     * Displays a single User model.
+     * Displays a single Calendar model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-        $user = User::findCache($id);
-        $user->save(false);
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new User model.
+     * Creates a new Calendar model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new SignupForm();
+        $model = new Calendar();
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $user = $model->signup();
-            if (isset($user)) {
-                return $this->redirect(['view', 'id' => $user->id]);
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -94,7 +76,7 @@ class UserController extends Controller
     }
 
     /**
-     * Updates an existing User model.
+     * Updates an existing Calendar model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -114,7 +96,7 @@ class UserController extends Controller
     }
 
     /**
-     * Deletes an existing User model.
+     * Deletes an existing Calendar model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -128,15 +110,15 @@ class UserController extends Controller
     }
 
     /**
-     * Finds the User model based on its primary key value.
+     * Finds the Calendar model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return User the loaded model
+     * @return Calendar the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = User::findOne($id)) !== null) {
+        if (($model = Calendar::findOne($id)) !== null) {
             return $model;
         }
 

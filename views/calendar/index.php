@@ -9,36 +9,12 @@ use yii\grid\GridView;
 
 $this->title = 'Calendars';
 $this->params['breadcrumbs'][] = $this->title;
+echo time();
 ?>
 <div class="calendar-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Create Calendar', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            [
-                'attribute' => 'user_id',
-                'value' => function (\app\models\Calendar $model){
-                    return $model->user->username;
-                }
-            ],
-            'activity_id',
-            'created_at',
-            'updated_at',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
+    <?= edofre\fullcalendar\Fullcalendar::widget([
+        'events' => \yii\helpers\Url::to(['calendar/events', 'id' => uniqid()]),
     ]); ?>
 
 

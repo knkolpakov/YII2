@@ -28,11 +28,10 @@ class DefaultController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['default']
-                ,
+                
                 'rules' => [
                     [
-                        'actions' => ['default'],
+                        'actions' => ['index', 'default','create', 'update', 'view', 'delete'],
                         'allow' => true,
                         'roles' => ['admin'],
                     ],

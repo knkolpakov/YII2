@@ -29,11 +29,10 @@ class UsersController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['users']
-                ,
+                
                 'rules' => [
                     [
-                        'actions' => ['users'],
+                        'actions' => ['index', 'users','create', 'update', 'view', 'delete'],
                         'allow' => true,
                         'roles' => ['admin'],
                     ],

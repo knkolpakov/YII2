@@ -39,7 +39,7 @@ class CalendarSearch extends Calendar
      */
     public function search($params)
     {
-        $query = Calendar::find()->where(['user_id'=>\Yii::$app->user->identity->id]);
+        $query = Calendar::find();
 
         // add conditions that should always apply here
 

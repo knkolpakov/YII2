@@ -29,11 +29,10 @@ class ActivityController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['activity']
-                ,
+                
                 'rules' => [
                     [
-                        'actions' => ['activity'],
+                        'actions' => ['index', 'activity','create', 'update', 'view', 'delete'],
                         'allow' => true,
                         'roles' => ['admin'],
                     ],

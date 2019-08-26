@@ -40,7 +40,7 @@ class SearchActivity extends Activity
      */
     public function search($params)
     {
-        $query = Activity::find();
+        $query = Activity::find()->where(['id'=>\Yii::$app->user->identity->id]);
 
         // add conditions that should always apply here
 

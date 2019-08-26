@@ -8,6 +8,7 @@ use app\models\CalendarSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use edofre\fullcalendar\models\Event;
 
 /**
  * CalendarController implements the CRUD actions for Calendar model.
@@ -123,5 +124,33 @@ class CalendarController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionEvents($id, $start, $end)
+    {
+
+        $start = Yii::$app->formatter->asTimestamp($start);
+        $end = Yii::$app->formatter->asTimestamp($end);
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $calendarRecordsQuery = Calendar::find()
+            ->joinWith('activity')
+            ->where(['user_id' => Yii::$app->user->id])
+            ->andWhere('activity.start_date >= :start_date', [':start_date' => $start])
+            ->andWhere('activity.end_date <= :end_date', [':end_date' => $end]);
+        $records =[];
+
+        foreach ($calendarRecordsQuery->each(100) as $calendarRecord){
+            $activity = $calendarRecord->activity;
+            $records[] = new Event([
+                'id' => $activity->id,
+                'title' => $activity->title,
+                'start' => Yii::$app->formatter->asDatetime($activity->start_date, 'Y-MM-dTh:mm:ss'),
+                'end' => Yii::$app->formatter->asDatetime($activity->end_date, 'Y-MM-dTh:mm:ss'),
+                'url' => \yii\helpers\Url::to(['activity/view', 'id' => $activity->id]),
+                'color' => 'red',
+            ]);
+        }
+        return $records;
+        
     }
 }

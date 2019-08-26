@@ -4,6 +4,7 @@ namespace app\modules\admin\models;
 
 use Yii;
 use app\models\User;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "activity".

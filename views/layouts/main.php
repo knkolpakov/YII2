@@ -38,11 +38,14 @@ AppAsset::register($this);
  ]);
   
  $menuItems = [
+     ['label' => 'Calendar', 'url' => [\yii\helpers\Url::to(['calendar/index'])]],
      ['label' => 'Home', 'url' => ['/site/index']],
      ['label' => 'About', 'url' => ['/site/about']],
      ['label' => 'Contact', 'url' => ['/site/contact']],
-     ['label' => 'Admin', 'url' => ['admin/default']],
-     ['label' => 'My Activity', 'url' => ['activity/index']],
+     ['label' => 'Admin', 'url' => [\yii\helpers\Url::to(['admin/default'])]],
+     ['label' => 'My Activity', 'url' => [\yii\helpers\Url::to(['activity/index'])]],
+     ['label' => 'Cabinet', 'url' => [\yii\helpers\Url::to(['user/view'])]],
+     
  ];
   
  if (Yii::$app->user->isGuest) {

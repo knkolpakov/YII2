@@ -18,6 +18,7 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'log' => [
+            'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
@@ -27,6 +28,13 @@ $config = [
         ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
+        ],
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            // send all mails to a file by default. You have to set
+            // 'useFileTransport' to false and configure a transport
+            // for the mailer to send real emails.
+            'useFileTransport' => true,
         ],
         'db' => $db,
     ],

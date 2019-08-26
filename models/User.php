@@ -219,6 +219,21 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             ->via('calendarRecords');
     }
 
+    public static function findCache($condition)
+    {
+        if (Yii::$app->cache->exists(self::tableName().'_'.$condition) === false) {
+            Yii::info('В кеше по этому ключу ничего нет');
+            $result = parent::findOne($condition);
+            Yii::$app->cache->set(self::tableName().'_'.$condition, $result);
+        } else {
+            Yii::info('Кеш найден');
+            $result = Yii::$app->cache->get(self::tableName().'_'.$condition);
+        }
+
+        return $result;
+
+    }
+
 
 
 }

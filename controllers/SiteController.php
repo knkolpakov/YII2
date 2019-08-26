@@ -103,14 +103,14 @@ class SiteController extends Controller
         }
     }
 
-    public function actionTest()
+    public function actionTestCache()
     {
-        $activity = Activity::findOne(14);
+        $activity = Activity::findOne(2);
         $activity->title = 'eqweqweqweqweqwe';
-        $activity->save();
-        var_dump($activity->errors);
-        die();
-
+        $activity->start_date = time();
+        $activity->end_date = time();
+        $activity->save(false);
+        return $this->render('test-cache', ['activity'=>$activity, 'errors'=>$activity->errors]);
     }
 
     public function actionSignUp()
